@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static',filename='css/styles.css') }}" rel="stylesheet" />
+    <title>Donate</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Donations are Highly Appreciated</h1>
+        <div class="row">
+            <div class="col-4">
+                <form action="/user/donation" method="post">
+                    <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+                <input type="text" placeholder="enter your fullname" class="form-control" name="name">
+                <input type="email" placeholder="enter your email" class="form-control" name="email">
+                <input type="text" placeholder="enter the amount" class="form-control" name="amt">
+                <button class="btn btn-success">Donate</button>
+                
+                
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

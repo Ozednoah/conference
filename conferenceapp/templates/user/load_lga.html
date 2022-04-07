@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static',filename='css/styles.css') }}" rel="stylesheet" />
+    <title>CHECK AVAILABLITY</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Sign Up Form</h1>
+        <form action="">
+        <div class="row">
+            <form action="">
+
+                <label>Select state</label>
+                <div class="col-4">
+                <select name="state" id="state" class="form-control">
+                    <option value="">Choose state</option>
+                    {% for i in states%}
+
+                    <option value="{{i.state_id}}">{{i.state_name}}</option>
+                    {% endfor %}
+
+                </div>
+                </select>
+                <div>
+                    <label>Select lga</label>
+                </div>
+                <div id="lga" class="form-control col-4">
+
+                </div>
+                <div>
+                    <button class="btn btn-success">Submit</button>
+                </div>
+            </form>
+
+
+
+        </div>
+            
+    </div>
+        <script src="{{ url_for('static',filename='js/jquery.js')}}"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#state').change(function(){
+                    var stateid = $(this).val()
+                    var csrf = "{{ csrf_token() }}"
+                    data2send = {'stateid':stateid,'csrf_token':csrf}
+                   $.ajax({
+                       url:'/demo/lga',
+                       data:data2send,
+                       type:'post',
+                       success:function(msg){
+                          $('#lga').html(msg) 
+                       },
+                       error:function(wax){
+                           alert(wax)
+                       }
+
+                    
+                   })
+                })
+            })
+        </script>
+</body>
+</html>

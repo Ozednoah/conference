@@ -1,0 +1,83 @@
+{% extends 'user/layout.html'%}
+{% block pagecontent %}
+
+<section class="page-section bg-light" style="min-height:90vh">
+    <div class="container-fluid">
+ <div class="d-flex" id="wrapper">
+            <!-- Sidebar-->
+            <div class="border-end bg-white" id="sidebar-wrapper">
+                 
+                <div class="list-group list-group-flush">
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/userhome">Dashboard</a>
+                     
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/user/editprofile">My Profile</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Payments</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{url_for('user_breakout')}}">Break Out Session</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{url_for('pay_user_breakout')}}">Pay Break Out Session</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Log Out</a>
+                </div>
+            </div>
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper">
+                
+                <!-- Page content-->
+                <div class="container-fluid">
+                    <h1 class="mt-4">Break Out Sessions</h1>
+                    <p>Edit your profile by completing the form below.Edit your profile by completing the form below.Edit your profile by completing the form below.Edit your profile by completing the form below.</p>
+
+ 
+                     
+                </div>
+
+                <div class="container">
+                                       <div class="row">
+<div class="col-10 offset-1">
+   <div class="table-responsive">
+       {% set m=get_flashed_messages() %}
+       <p class="alert alert-success">{{m}}</p>
+       <form action="/user/paybreak" method="POST">
+           <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+       <table class="table table-striped" width="80%">
+       <tr>
+           <th>#</th>
+           <th><input type="checkbox" id="selectall"></th>
+           <th>Title</th>
+           <th>Skill Level</th>
+           <th>Icon</th>
+           <th>Action</th>
+           <th>Price</th>
+       </tr>
+      {% for i in breaksess %}
+        <tr>
+           <td>{{loop.index}}</td>
+           <td><input type="checkbox" name="bid" value="{{i.break_id}}"></td>
+           <td>{{i.break_title}}</td>
+           <td>{{i.skillobj.skill_name}}</td>
+           <td><img src="/static/assets/img/{{i.break_picture}}" width="100"></td>
+           <td><a href="/user/breakout/{{i.break_id}}">Details</a></td>
+           <td>{{i.break_amt}}</td>
+       </tr>
+       {% endfor %}
+   </table>
+   </div>
+</div>
+<div class="row">
+    <div class="col text-center">
+       
+            <button class="btn btn-outline-primary btn-lg">Register</button>
+       
+    </div>
+</div>
+</form>
+                    </div>
+                   
+                </div>
+
+                
+
+            </div>
+        </div>    
+    </div>
+</section>
+       
+{% endblock %}

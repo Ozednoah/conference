@@ -1,0 +1,33 @@
+{% extends 'admin/layout.html'%}
+{% block content %}
+<div style="text-align:right"><a href="{{ url_for('adminbreak')}}" class="btn btn-lg btn-success">See all Breakout</a></div>
+<h2>Add breakout</h2>
+<form action="" method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label class="form-label">image</label>
+      <input type="file" class="form-control" name="image">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+       
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Title</label>
+      <input type="text" class="form-control" name="title">
+    </div>
+   <div class="mb-3">
+      <label class="form-label">Skill Level</label>
+      <select name="skill" class="form-control">
+          <option value="">Select</option>
+          {% for i in skills %}
+          <option value="{{ i.skill_id }}">{{ i.skill_name}}</option>
+          {% endfor %}
+      </select>
+    </div>
+    <div class="mb-3" style="text-align:right">
+      <button class="btn btn-lg btn-success">Add Breakout</button>
+    </div>
+  </form>
+
+
+
+
+{% endblock%}

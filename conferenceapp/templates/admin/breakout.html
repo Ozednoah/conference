@@ -1,0 +1,41 @@
+{% extends 'admin/layout.html'%}
+{% block content %}
+<h2>Breakout Sessions</h2>
+<div style="text-align:right"><a href="{{ url_for('addbreakout')}}" class="btn btn-lg btn-success">Add Breakout</a></div>
+{% set m =get_flashed_messages()%}
+<p class="alert alert-success">{{ m}}</p>
+      <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Image</th>
+      <th scope="col">Title</th>
+      <th scope="col">Level</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% if all_breakouts %}
+      {% for i in all_breakouts%}
+    <tr>
+      <td>{{ loop.index }}</td>
+      {% if i.break_picture %}
+      <td>
+      <img src="/static/assets/img/{{i.break_picture}}" width="100" height="100">
+      {{ i.break_picture }}
+      </td>
+      {% else %}
+      <td>
+        <img src="{{ url_for('static',filename='assets/img/header2.jpeg')}}" width="100" height="100"> 
+    {% endif %}</td>
+      <td>{{ i.break_title }}</td>
+      <td>{{ i.break_skillid }}</td>
+      <td><a class="btn btn-danger" href="/admin/breakout/delete/{{i.break_id}}">Delete</a></td>
+    </tr>
+    {% endfor %}
+    {% endif %}
+  </tbody>
+</table>
+
+
+{% endblock %}

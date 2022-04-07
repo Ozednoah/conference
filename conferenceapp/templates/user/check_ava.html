@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static',filename='css/styles.css') }}" rel="stylesheet" />
+    <title>CHECK AVAILABLITY</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Sign Up Form</h1>
+        <form action="">
+        <div class="row">
+            <div class="col-5">
+                <label>Enter your username</label>
+                <input type="text" name="username" class="form-control" id="username">
+            </div>
+            <div class="col-2">
+                <button class="btn btn-sm btn-danger" type="button" id="check">Check username</button>
+            </div>
+        </div>
+        <div class="row">
+           <label>Enter Email</label>
+           <input type="email" class="form-control">
+        </div>
+        <div class="row">
+            <button class="btn btn-sm btn-success" id="btnsubmit">submit form</button>
+         </div>
+    </form>
+    </div>
+        <script src="{{ url_for('static',filename='js/jquery.js')}}"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#check').click(function(){
+                    var username = $('#username').val()
+                    data2send = "us="+username
+                    $.ajax({
+                        url:'/check/result',
+                        type:"get",
+                        data:data2send,
+                        success:function(msg){
+                            if (msg=="username taken"){
+                                alert(msg)
+                                $('#btnsubmit').attr('disabled','disabled')
+                            }
+                            else{
+                                alert(msg)
+                                $('#btnsubmit').removeAttr('disabled','disabled')
+                            }
+                            
+                        },
+                        error:function(){}
+                    })
+                })
+
+
+
+
+            })
+        </script>
+</body>
+</html>

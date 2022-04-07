@@ -1,0 +1,119 @@
+{% extends 'user/layout.html'%}
+{% block pagecontent %}
+<section class="page-section bg-light" style="min-height:90vh">
+    <div class="container-fluid">
+ <div class="d-flex" id="wrapper">
+            <!-- Sidebar-->
+            <div class="border-end bg-white" id="sidebar-wrapper">
+                 
+                <div class="list-group list-group-flush">
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/userhome">Dashboard</a>
+                     
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/user/editprofile">My Profile</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{url_for('discussion')}}">Join Discussion</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Payments</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{url_for('user_breakout')}}">Break Out Session</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Log Out</a>
+                </div>
+            </div>
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper">
+                
+                <!-- Page content-->
+                <div class="container-fluid">
+                    <h1 class="mt-4">My Profile</h1>
+                    <p>Edit your profile by completing the form below.</p>
+
+    <div class="row">
+        <div class="col-5">
+            <label>Post Title</label>
+        </div>
+        <div class="col-5">
+            {{posts.p_title}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-5">
+            <label>Desc</label>
+        </div>
+        <div class="col-5">
+            {{posts.p_desc}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-5">
+            <label>Post By</label>
+        </div>
+        <div class="col-5">
+            {{posts.duser.user_fname}} {{posts.duser.user_lname}}
+            <input type="hidden" name="postid" value="{{posts.p_id}}" id="postid">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-5">
+            <label>Date</label>
+        </div>
+        <div class="col-5">
+            {{posts.p_date}}
+        </div>
+    </div>
+    <div class="row">
+        <h1>Comments</h1>
+    </div>
+    <div class="row">
+        <textarea name="comments" id="comment" cols="30" rows="10">
+
+        </textarea>
+    </div>
+    <div>
+        <button class="btn btn-success" id="btnpost">Post</button>
+        
+    </div>
+    <div id="mycomment">
+        
+        <div class="row">
+            <div class="col">
+                {% for c in commentdeets %}
+                <p>{{c.c_comment}}    <span>{{c.c_date}}</span></p>
+                {% endfor %}
+            </div>
+        </div>
+        
+    </div>
+
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>    
+</div>
+</section>
+  
+<!-- Footer-->
+<script src="{{ url_for('static',filename='js/jquery.js')}}"></script>
+<script>
+$(document).ready(function(){
+    $('#btnpost').click(function(){
+        var usercomment = $('#comment').val()
+        var postid = $('#postid').val()
+        var csrf = '{{ csrf_token() }}'
+        var data = {'comment':usercomment,'csrf_token':csrf,'postid':postid}
+        $.ajax({
+            url:'/post/comment',
+            data:data,
+            type:'POST',
+            success:function(msg){
+                $("#mycomment").prepend("<div class='row'><div class='col-8 mx-auto'>"+msg+"</div></div>")
+            },
+            error:function(err){
+                console.log(err)
+            }
+        })
+    })
+
+})
+</script>
+{% endblock %}
